@@ -1,0 +1,26 @@
+:root { --ink: #1c1f24; --muted: #6b7280; --line: #e2e0da; --bg: #f7f6f2; --accent: #2e4869; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 56px 24px 80px; background: var(--bg); color: var(--ink);
+  font: 16px/1.6 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+main { max-width: 680px; margin: 0 auto; }
+.eyebrow {
+  font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--muted); margin: 0 0 6px;
+}
+h1 { font-size: 28px; line-height: 1.25; margin: 0 0 8px; font-weight: 700; letter-spacing: -.01em; }
+.sub { color: var(--muted); margin: 0 0 40px; font-size: 15px; }
+a.card {
+  display: block; text-decoration: none; color: inherit;
+  background: #fff; border: 1px solid var(--line); border-radius: 10px;
+  padding: 20px 24px; margin-bottom: 12px;
+  transition: border-color .15s ease, transform .15s ease;
+}
+a.card:hover { border-color: var(--accent); transform: translateY(-1px); }
+.num {
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--accent); font-weight: 700; margin-bottom: 6px;
+}
+.card h2 { font-size: 18px; margin: 0; font-weight: 600; }

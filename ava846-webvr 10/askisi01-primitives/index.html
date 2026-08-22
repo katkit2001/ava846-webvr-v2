@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Άσκηση 01 — ΥΚ1, Κτίριο Γ΄ | 3Δ σκηνή με primitives</title>
+  <meta name="description" content="Αναπαράσταση του ΥΚ1 (Κτίριο Γ΄, Τμήμα Τεχνών Ήχου και Εικόνας, Ιόνιο Πανεπιστήμιο) με primitives σε A-Frame. Διάταξη πάγκων σε Π.">
+  <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+  <script src="js/scene.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div id="hud">
+    <b>ΥΚ1 · Κτίριο Γ΄</b>
+    <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> μετακίνηση<br>
+    Ποντίκι / drag: περιστροφή βλέμματος<br>
+    Κουμπί <kbd>VR</kbd> κάτω δεξιά για προβολή σε headset
+  </div>
+
+  <a-scene light="defaultLightsEnabled: false"
+           shadow="type: pcf"
+           renderer="antialias: true; colorManagement: true; toneMapping: ACESFilmic; exposure: 0.85">
+
+    <a-assets>
+      <!-- Υλικά της σκηνής, μόνο χρώματα (οι υφές μπαίνουν στην άσκηση 02) -->
+      <a-mixin id="m-wall"      material="color: #d6d2c8; roughness: 0.95; metalness: 0"></a-mixin>
+      <a-mixin id="m-skirt"     material="color: #ada695; roughness: 0.7"></a-mixin>
+      <a-mixin id="m-floor"     material="color: #a79e88; roughness: 0.45; metalness: 0.1"></a-mixin>
+      <a-mixin id="m-ceiling"   material="color: #eae7e0; roughness: 1"></a-mixin>
+      <a-mixin id="m-desk"      material="color: #cec3a9; roughness: 0.7"></a-mixin>
+      <a-mixin id="m-wood"      material="color: #bb9459; roughness: 0.8"></a-mixin>
+      <a-mixin id="m-metal"     material="color: #79818b; roughness: 0.4; metalness: 0.7"></a-mixin>
+      <a-mixin id="m-tube"      material="color: #23262a; roughness: 0.45; metalness: 0.6"></a-mixin>
+      <a-mixin id="m-plastic"   material="color: #26292e; roughness: 0.6"></a-mixin>
+      <a-mixin id="m-screen"    material="color: #12161c; roughness: 0.2; metalness: 0.1"></a-mixin>
+      <a-mixin id="m-chair"     material="color: #1c1f24; roughness: 0.85"></a-mixin>
+      <a-mixin id="m-curtain"   material="color: #c7aa76; roughness: 1"></a-mixin>
+      <a-mixin id="m-glass"     material="color: #dfeef7; opacity: 0.3; transparent: true; roughness: 0.05; metalness: 0.2"></a-mixin>
+      <a-mixin id="m-frame"     material="color: #bcc3c9; roughness: 0.45; metalness: 0.25"></a-mixin>
+      <a-mixin id="m-door"      material="color: #1f3b31; roughness: 0.5"></a-mixin>
+      <a-mixin id="m-doorpane"  material="color: #cfd9dd; roughness: 0.15; metalness: 0.1"></a-mixin>
+      <a-mixin id="m-handle"    material="color: #b08a3e; roughness: 0.35; metalness: 0.8"></a-mixin>
+      <a-mixin id="m-white"     material="color: #ebe9e3; roughness: 0.22; metalness: 0.05"></a-mixin>
+    </a-assets>
+
+    <!-- ============ ΦΩΤΙΣΜΟΣ ============ -->
+    <a-entity light="type: ambient; color: #ccd6e2; intensity: 0.22"></a-entity>
+    <a-entity light="type: hemisphere; color: #eef2f6; groundColor: #9d947e; intensity: 0.18"></a-entity>
+
+    <!-- Ήλιος από την πλευρά των παραθύρων, με σκιές -->
+    <a-entity light="type: directional; color: #fff2d4; intensity: 0.85; castShadow: true;
+                     shadowMapWidth: 2048; shadowMapHeight: 2048; shadowBias: -0.0006;
+                     shadowCameraLeft: -6; shadowCameraRight: 6;
+                     shadowCameraTop: 6; shadowCameraBottom: -6"
+              position="8 4.5 1.5"></a-entity>
+
+    <a-entity light="type: point; color: #eaf0fb; intensity: 9; distance: 7; decay: 1" position="-1.7 2.42 -1.2"></a-entity>
+    <a-entity light="type: point; color: #eaf0fb; intensity: 9; distance: 7; decay: 1" position="1.6 2.42 1.2"></a-entity>
+
+    <!-- ============ ΑΙΘΟΥΣΑ (7 x 6 x 2.9 m) ============ -->
+    <a-plane mixin="m-floor" position="0 0 0" rotation="-90 0 0" width="7" height="6" shadow="receive: true"></a-plane>
+    <a-box mixin="m-ceiling" position="0 2.95 0" width="7" height="0.1" depth="6" shadow="cast: true; receive: true"></a-box>
+
+    <!-- Σοβατεπί -->
+    <a-box mixin="m-skirt" position="0 0.05 2.98" width="7" height="0.1" depth="0.03"></a-box>
+    <a-box mixin="m-skirt" position="-3.48 0.05 0" width="0.03" height="0.1" depth="6"></a-box>
+    <a-box mixin="m-skirt" position="3.48 0.05 0" width="0.03" height="0.1" depth="6"></a-box>
+    <a-box mixin="m-skirt" position="-3.35 0.05 -2.98" width="0.3" height="0.1" depth="0.03"></a-box>
+    <a-box mixin="m-skirt" position="0.7 0.05 -2.98" width="5.6" height="0.1" depth="0.03"></a-box>
+
+    <!-- Πίσω και αριστερός τοίχος, συμπαγείς -->
+    <a-box mixin="m-wall" position="0 1.45 3.08" width="7.2" height="2.9" depth="0.15" shadow="cast: true; receive: true"></a-box>
+    <a-box mixin="m-wall" position="-3.58 1.45 0" width="0.15" height="2.9" depth="6.2" shadow="cast: true; receive: true"></a-box>
+
+    <!-- Μπροστινός τοίχος: δύο κομμάτια και υπέρθυρο, για το άνοιγμα της θύρας -->
+    <a-box mixin="m-wall" position="-3.39 1.45 -3.08" width="0.38" height="2.9" depth="0.15" shadow="cast: true; receive: true"></a-box>
+    <a-box mixin="m-wall" position="0.74 1.45 -3.08" width="5.68" height="2.9" depth="0.15" shadow="cast: true; receive: true"></a-box>
+    <a-box mixin="m-wall" position="-2.65 2.83 -3.08" width="1.1" height="0.15" depth="0.15" shadow="cast: true; receive: true"></a-box>
+
+    <!-- Θύρα 1.10 x 2.76 m: υαλοπίνακες πίσω, από πάνω τους το ξύλινο κούφωμα -->
+    <a-plane mixin="m-doorpane" position="-2.65 1.38 -3.0" width="1.1" height="2.76"></a-plane>
+    <a-box mixin="m-door" position="-2.65 2.73 -2.97" width="1.18" height="0.09" depth="0.05"></a-box>
+    <a-box mixin="m-door" position="-2.65 0.02 -2.97" width="1.18" height="0.09" depth="0.05"></a-box>
+    <a-box mixin="m-door" position="-3.21 1.38 -2.97" width="0.09" height="2.76" depth="0.05"></a-box>
+    <a-box mixin="m-door" position="-2.09 1.38 -2.97" width="0.09" height="2.76" depth="0.05"></a-box>
+    <a-box mixin="m-door" position="-2.65 1.38 -2.97" width="0.07" height="2.76" depth="0.05"></a-box>
+    <a-box mixin="m-door" position="-2.65 2.13 -2.97" width="1.18" height="0.08" depth="0.05"></a-box>
+    <!-- Καΐτια του φεγγίτη -->
+    <a-box mixin="m-door" position="-2.65 2.47 -2.97" width="1.18" height="0.05" depth="0.04"></a-box>
+    <a-box mixin="m-door" position="-2.65 1.42 -2.97" width="1.18" height="0.05" depth="0.04"></a-box>
+    <a-box mixin="m-door" position="-2.93 2.45 -2.97" width="0.05" height="0.6" depth="0.04"></a-box>
+    <a-box mixin="m-door" position="-2.37 2.45 -2.97" width="0.05" height="0.6" depth="0.04"></a-box>
+    <!-- Ταμπλάς και χερούλι -->
+    <a-box mixin="m-door" position="-2.65 0.44 -2.96" width="1.1" height="0.8" depth="0.06" shadow="cast: true"></a-box>
+    <a-cylinder mixin="m-handle" position="-2.72 1.05 -2.93" rotation="0 0 90" radius="0.018" height="0.13"></a-cylinder>
+
+    <!-- Δεξιός τοίχος: σπασμένος σε κομμάτια γύρω από τα δύο παράθυρα -->
+    <a-box mixin="m-wall" position="3.58 0.5 0" width="0.15" height="1.0" depth="6.2" shadow="cast: true; receive: true"></a-box>
+    <a-box mixin="m-wall" position="3.58 2.6 0" width="0.15" height="0.6" depth="6.2" shadow="cast: true; receive: true"></a-box>
+    <a-box mixin="m-wall" position="3.58 1.65 -2.55" width="0.15" height="1.3" depth="0.9" shadow="cast: true; receive: true"></a-box>
+    <a-box mixin="m-wall" position="3.58 1.65 0" width="0.15" height="1.3" depth="1.4" shadow="cast: true; receive: true"></a-box>
+    <a-box mixin="m-wall" position="3.58 1.65 2.55" width="0.15" height="1.3" depth="0.9" shadow="cast: true; receive: true"></a-box>
+
+    <!-- Τζάμια, κάσες και ποδιά παραθύρου -->
+    <a-plane mixin="m-glass" position="3.5 1.65 -1.4" rotation="0 -90 0" width="1.4" height="1.3" shadow="cast: false"></a-plane>
+    <a-plane mixin="m-glass" position="3.5 1.65 1.4"  rotation="0 -90 0" width="1.4" height="1.3" shadow="cast: false"></a-plane>
+    <a-box mixin="m-frame" position="3.52 1.65 -1.4" width="0.05" height="1.3" depth="0.06"></a-box>
+    <a-box mixin="m-frame" position="3.52 1.65 1.4"  width="0.05" height="1.3" depth="0.06"></a-box>
+    <a-box mixin="m-frame" position="3.52 2.3 -1.4" width="0.05" height="0.06" depth="1.4"></a-box>
+    <a-box mixin="m-frame" position="3.52 2.3 1.4"  width="0.05" height="0.06" depth="1.4"></a-box>
+    <a-box mixin="m-wall" position="3.4 1.0 0" width="0.32" height="0.06" depth="6" shadow="cast: true; receive: true"></a-box>
+
+    <!-- Κουρτινόξυλο, κουρτίνες και κρίκοι -->
+    <a-cylinder mixin="m-frame" position="3.34 2.48 0" rotation="90 0 0" radius="0.014" height="5.7"></a-cylinder>
+    <a-box mixin="m-curtain" position="3.37 1.73 -2.15" width="0.11" height="1.45" depth="0.5" shadow="cast: true"></a-box>
+    <a-box mixin="m-curtain" position="3.37 1.73 -0.72" width="0.11" height="1.45" depth="0.5" shadow="cast: true"></a-box>
+    <a-box mixin="m-curtain" position="3.37 1.73 0.72" width="0.11" height="1.45" depth="0.5" shadow="cast: true"></a-box>
+    <a-box mixin="m-curtain" position="3.37 1.73 2.15" width="0.11" height="1.45" depth="0.5" shadow="cast: true"></a-box>
+    <a-torus mixin="m-frame" position="3.34 2.46 -2.34" rotation="0 90 0" radius="0.028" radius-tubular="0.006"></a-torus>
+    <a-torus mixin="m-frame" position="3.34 2.46 -2.15" rotation="0 90 0" radius="0.028" radius-tubular="0.006"></a-torus>
+    <a-torus mixin="m-frame" position="3.34 2.46 -1.96" rotation="0 90 0" radius="0.028" radius-tubular="0.006"></a-torus>
+    <a-torus mixin="m-frame" position="3.34 2.46 -0.91" rotation="0 90 0" radius="0.028" radius-tubular="0.006"></a-torus>
+    <a-torus mixin="m-frame" position="3.34 2.46 -0.72" rotation="0 90 0" radius="0.028" radius-tubular="0.006"></a-torus>
+    <a-torus mixin="m-frame" position="3.34 2.46 -0.53" rotation="0 90 0" radius="0.028" radius-tubular="0.006"></a-torus>
+    <a-torus mixin="m-frame" position="3.34 2.46 0.53" rotation="0 90 0" radius="0.028" radius-tubular="0.006"></a-torus>
+    <a-torus mixin="m-frame" position="3.34 2.46 0.72" rotation="0 90 0" radius="0.028" radius-tubular="0.006"></a-torus>
+    <a-torus mixin="m-frame" position="3.34 2.46 0.91" rotation="0 90 0" radius="0.028" radius-tubular="0.006"></a-torus>
+    <a-torus mixin="m-frame" position="3.34 2.46 1.96" rotation="0 90 0" radius="0.028" radius-tubular="0.006"></a-torus>
+    <a-torus mixin="m-frame" position="3.34 2.46 2.15" rotation="0 90 0" radius="0.028" radius-tubular="0.006"></a-torus>
+    <a-torus mixin="m-frame" position="3.34 2.46 2.34" rotation="0 90 0" radius="0.028" radius-tubular="0.006"></a-torus>
+
+    <!-- Θερμαντικό σώμα -->
+    <a-box mixin="m-white" position="3.44 1.4 0" width="0.1" height="0.6" depth="0.9" shadow="cast: true"></a-box>
+    <a-box mixin="m-metal" position="3.48 1.03 0" width="0.03" height="0.1" depth="0.06"></a-box>
+
+    <!-- Κλιματιστικά -->
+    <a-box mixin="m-white" position="1.6 2.52 -2.9" width="0.85" height="0.28" depth="0.22" shadow="cast: true"></a-box>
+    <a-box mixin="m-metal" position="1.6 2.39 -2.86" width="0.75" height="0.03" depth="0.15"></a-box>
+    <a-box mixin="m-white" position="3.4 2.52 2.3" width="0.22" height="0.28" depth="0.85" shadow="cast: true"></a-box>
+    <a-box mixin="m-metal" position="3.36 2.39 2.3" width="0.15" height="0.03" depth="0.75"></a-box>
+
+    <!-- Τοίχος του διδάσκοντα: πανί προβολής, πίνακας διακοπτών, κανάλι καλωδίων -->
+    <a-plane material="color: #f2efe7; roughness: 1" position="0.7 1.75 -2.99" width="2.2" height="1.4"></a-plane>
+    <a-box material="color: #c8c4ba; roughness: 0.7" position="2.7 1.5 -2.94" width="0.3" height="0.3" depth="0.06"></a-box>
+    <a-box material="color: #cdc9c0" position="0.6 0.12 -2.95" width="5.8" height="0.1" depth="0.08"></a-box>
+
+    <!-- Φωτιστικά οροφής -->
+    <a-box material="color: #f6f4ea; roughness: 0.3" position="-1.7 2.83 -1.2" width="0.26" height="0.07" depth="1.3"></a-box>
+    <a-box material="color: #f6f4ea; roughness: 0.3" position="-1.7 2.83 1.1" width="0.26" height="0.07" depth="1.3"></a-box>
+    <a-box material="color: #f6f4ea; roughness: 0.3" position="0.5 2.83 -1.2" width="0.26" height="0.07" depth="1.3"></a-box>
+    <a-box material="color: #f6f4ea; roughness: 0.3" position="0.5 2.83 1.1" width="0.26" height="0.07" depth="1.3"></a-box>
+    <a-box material="color: #f6f4ea; roughness: 0.3" position="2.4 2.83 -1.2" width="0.26" height="0.07" depth="1.3"></a-box>
+    <a-box material="color: #f6f4ea; roughness: 0.3" position="2.4 2.83 1.1" width="0.26" height="0.07" depth="1.3"></a-box>
+
+    <!-- Προβολέας οροφής -->
+    <a-cylinder mixin="m-metal" position="0.7 2.74 -1.3" radius="0.03" height="0.32"></a-cylinder>
+    <a-box mixin="m-metal" position="0.7 2.57 -1.3" width="0.28" height="0.03" depth="0.22"></a-box>
+    <a-box mixin="m-white" position="0.7 2.48 -1.3" width="0.32" height="0.15" depth="0.28" shadow="cast: true"></a-box>
+    <a-cylinder mixin="m-screen" position="0.7 2.48 -1.45" rotation="90 0 0" radius="0.045" height="0.04"></a-cylinder>
+
+    <!-- ============ ΠΑΓΚΟΙ ΣΕ ΔΙΑΤΑΞΗ Π ============ -->
+    <!-- 13 θέσεις: 4 αριστερά, 5 πίσω, 4 δεξιά. Κάθε θέση έχει το ίδιο
+         περιεχόμενο και μια καρέκλα, οπότε τα φτιάχνουν τα components
+         "workstation" και "chair". Εδώ μένουν θέση και στροφή. -->
+
+    <!-- ---- Αριστερό σκέλος ---- -->
+    <a-box mixin="m-desk" position="-3.1 0.74 -0.2" width="0.75" height="0.05" depth="4.8" shadow="cast: true; receive: true"></a-box>
+    <a-box mixin="m-metal" position="-3.1 0.4 -2.5" width="0.7" height="0.68" depth="0.05"></a-box>
+    <a-box mixin="m-metal" position="-3.1 0.4 -0.2" width="0.7" height="0.68" depth="0.05"></a-box>
+    <a-box mixin="m-metal" position="-3.1 0.4 2.1" width="0.7" height="0.68" depth="0.05"></a-box>
+    <a-box mixin="m-metal" position="-3.1 0.68 -0.2" width="0.06" height="0.06" depth="4.7"></a-box>
+
+    <a-entity workstation position="-3.1 0 -2.3" rotation="0 90 0">
+      <a-entity chair position="0 0 0.78"></a-entity>
+    </a-entity>
+    <a-entity workstation position="-3.1 0 -1.15" rotation="0 90 0">
+      <a-entity chair position="0 0 0.8" rotation="0 -14 0"></a-entity>
+    </a-entity>
+    <a-entity workstation position="-3.1 0 0" rotation="0 90 0">
+      <a-entity chair position="0 0 0.78"></a-entity>
+    </a-entity>
+    <a-entity workstation position="-3.1 0 1.15" rotation="0 90 0">
+      <a-entity chair position="0 0 0.82" rotation="0 18 0"></a-entity>
+    </a-entity>
+
+    <!-- ---- Πίσω σκέλος ---- -->
+    <a-box mixin="m-desk" position="0.38 0.74 2.6" width="6.15" height="0.05" depth="0.75" shadow="cast: true; receive: true"></a-box>
+    <a-box mixin="m-metal" position="-2.6 0.4 2.6" width="0.05" height="0.68" depth="0.7"></a-box>
+    <a-box mixin="m-metal" position="0.38 0.4 2.6" width="0.05" height="0.68" depth="0.7"></a-box>
+    <a-box mixin="m-metal" position="3.35 0.4 2.6" width="0.05" height="0.68" depth="0.7"></a-box>
+    <a-box mixin="m-metal" position="0.38 0.68 2.6" width="6.05" height="0.06" depth="0.06"></a-box>
+
+    <a-entity workstation position="-2.2 0 2.6" rotation="0 180 0">
+      <a-entity chair position="0 0 0.78"></a-entity>
+    </a-entity>
+    <a-entity workstation position="-1.05 0 2.6" rotation="0 180 0">
+      <a-entity chair position="0 0 0.81" rotation="0 -16 0"></a-entity>
+    </a-entity>
+    <a-entity workstation position="0.1 0 2.6" rotation="0 180 0">
+      <a-entity chair position="0 0 0.78"></a-entity>
+    </a-entity>
+    <a-entity workstation position="1.25 0 2.6" rotation="0 180 0">
+      <a-entity chair position="0 0 0.79" rotation="0 12 0"></a-entity>
+    </a-entity>
+    <a-entity workstation position="2.4 0 2.6" rotation="0 180 0">
+      <a-entity chair position="0 0 0.78" rotation="0 -10 0"></a-entity>
+    </a-entity>
+
+    <!-- ---- Δεξί σκέλος, κάτω από τα παράθυρα ---- -->
+    <a-box mixin="m-desk" position="3.05 0.74 -0.2" width="0.75" height="0.05" depth="4.8" shadow="cast: true; receive: true"></a-box>
+    <a-box mixin="m-metal" position="3.05 0.4 -2.5" width="0.7" height="0.68" depth="0.05"></a-box>
+    <a-box mixin="m-metal" position="3.05 0.4 -0.2" width="0.7" height="0.68" depth="0.05"></a-box>
+    <a-box mixin="m-metal" position="3.05 0.4 2.1" width="0.7" height="0.68" depth="0.05"></a-box>
+    <a-box mixin="m-metal" position="3.05 0.68 -0.2" width="0.06" height="0.06" depth="4.7"></a-box>
+
+    <a-entity workstation position="3.05 0 -2.3" rotation="0 -90 0">
+      <a-entity chair position="0 0 0.78"></a-entity>
+    </a-entity>
+    <a-entity workstation position="3.05 0 -1.15" rotation="0 -90 0">
+      <a-entity chair position="0 0 0.81" rotation="0 15 0"></a-entity>
+    </a-entity>
+    <a-entity workstation position="3.05 0 0" rotation="0 -90 0">
+      <a-entity chair position="0 0 0.78"></a-entity>
+    </a-entity>
+    <a-entity workstation position="3.05 0 1.15" rotation="0 -90 0">
+      <a-entity chair position="0 0 0.82" rotation="0 -20 0"></a-entity>
+    </a-entity>
+
+    <!-- ============ ΚΕΝΤΡΙΚΑ ΤΡΑΠΕΖΙΑ (στο άνοιγμα του Π) ============ -->
+    <a-box mixin="m-wood" position="-0.5 0.73 -1.7" width="1.5" height="0.05" depth="0.7" shadow="cast: true; receive: true"></a-box>
+    <a-box mixin="m-wood" position="-0.5 0.73 -0.95" width="1.5" height="0.05" depth="0.7" shadow="cast: true; receive: true"></a-box>
+    <a-cylinder mixin="m-metal" position="-1.17 0.36 -1.95" radius="0.025" height="0.7"></a-cylinder>
+    <a-cylinder mixin="m-metal" position="0.17 0.36 -1.95" radius="0.025" height="0.7"></a-cylinder>
+    <a-cylinder mixin="m-metal" position="-1.17 0.36 -0.7" radius="0.025" height="0.7"></a-cylinder>
+    <a-cylinder mixin="m-metal" position="0.17 0.36 -0.7" radius="0.025" height="0.7"></a-cylinder>
+    <a-box mixin="m-metal" position="-0.5 0.68 -1.95" width="1.4" height="0.05" depth="0.05"></a-box>
+    <a-box mixin="m-metal" position="-0.5 0.68 -0.7" width="1.4" height="0.05" depth="0.05"></a-box>
+
+    <!-- Ελεύθερες καρέκλες γύρω από τα τραπέζια -->
+    <a-entity chair position="-1.62 0 -1.75" rotation="0 -78 0"></a-entity>
+    <a-entity chair position="-1.62 0 -0.9" rotation="0 -96 0"></a-entity>
+    <a-entity chair position="-0.8 0 -2.35" rotation="0 -6 0"></a-entity>
+    <a-entity chair position="-0.1 0 -2.35" rotation="0 16 0"></a-entity>
+    <a-entity chair position="0.62 0 -1.35" rotation="0 94 0"></a-entity>
+
+    <!-- Κάδος -->
+    <a-cylinder mixin="m-metal" position="2.35 0.18 -2.72" radius="0.16" height="0.36" shadow="cast: true"></a-cylinder>
+
+    <!-- ============ ΕΞΩΤΕΡΙΚΟ ΠΕΡΙΒΑΛΛΟΝ (φαίνεται από τα παράθυρα) ============ -->
+    <a-plane material="color: #869466; roughness: 1" position="14 -0.05 0" rotation="-90 0 0" width="40" height="40"></a-plane>
+    <a-cylinder material="color: #6b5540" position="8 1.2 -1.6" radius="0.26" height="2.4"></a-cylinder>
+    <a-sphere material="color: #48693c" position="8 2.9 -1.6" radius="1.5"></a-sphere>
+    <a-cylinder material="color: #6b5540" position="9.4 1.1 2" radius="0.22" height="2.2"></a-cylinder>
+    <a-sphere material="color: #5a7d46" position="9.4 2.6 2" radius="1.2"></a-sphere>
+    <a-sphere material="color: #3f6136" position="11 2.1 0.2" radius="1.4"></a-sphere>
+    <a-sky color="#c3ddf0"></a-sky>
+
+    <!-- ============ ΚΑΜΕΡΑ (στο άνοιγμα του Π) ============ -->
+    <a-entity id="rig" position="1.1 0 0.9">
+      <a-camera position="0 1.6 0" wasd-controls="acceleration: 22" look-controls="pointerLockEnabled: false">
+        <a-cursor color="#ffffff" opacity="0.5" raycaster="far: 6"></a-cursor>
+      </a-camera>
+    </a-entity>
+
+  </a-scene>
+
+</body>
+</html>
