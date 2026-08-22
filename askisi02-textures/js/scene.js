@@ -1,8 +1,5 @@
 /* Άσκηση 02 — ΥΚ1: υφές και φωτισμός */
 
-/* Η καρέκλα και η θέση εργασίας επαναλαμβάνονται δεκάδες φορές μέσα στην
-   αίθουσα. Αντί να γραφτούν τα ίδια primitives κάθε φορά στο index.html,
-   μπαίνουν εδώ μία φορά και προστίθενται ως παιδιά της οντότητας. */
 
 AFRAME.registerComponent('chair', {
   init: function () {
@@ -39,7 +36,7 @@ AFRAME.registerComponent('workstation', {
   }
 });
 
-/* Τρεις προρυθμίσεις φωτισμού, με εναλλαγή από το πλήκτρο L ή το κουμπί του HUD. */
+
 AFRAME.registerComponent('lighting-presets', {
   init: function () {
     var presets = [
@@ -81,8 +78,7 @@ AFRAME.registerComponent('lighting-presets', {
   }
 });
 
-/* Οι browsers δεν ξεκινούν βίντεο χωρίς ενέργεια του χρήστη, οπότε η οθόνη
-   με το βίντεο ξεκινά με το κλικ. */
+
 window.addEventListener('click', function () {
   document.querySelector('#texVideo').play();
 });
