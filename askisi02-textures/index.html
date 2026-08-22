@@ -63,8 +63,8 @@
       <a-mixin id="m-skirt"    material="color: #ada695; roughness: 0.7"></a-mixin>
       <a-mixin id="m-door"     material="src: #texDoor; roughness: 0.55"></a-mixin>
       <a-mixin id="m-wood"     material="src: #texWood; roughness: 0.7"></a-mixin>
-      <!-- Δύο εκδοχές του ίδιου πάγκου: αλλάζει μόνο η φορά του repeat, ώστε
-           η υφή να μην τεντώνεται στους πάγκους κατά τον άξονα Z. -->
+      <!--
+         αλλάζει μόνο η φορά του repeat,  -->
       <a-mixin id="m-desk-x"   material="src: #texDesk; color: #cdc3ab; repeat: 6 1; roughness: 0.65"></a-mixin>
       <a-mixin id="m-desk-z"   material="src: #texDesk; color: #cdc3ab; repeat: 1 5; roughness: 0.65"></a-mixin>
       <a-mixin id="m-metal"    material="src: #texMetal; color: #b4bcc4; roughness: 0.4; metalness: 0.75"></a-mixin>
@@ -91,7 +91,7 @@
       <a-mixin id="m-sign"     material="src: #texSign; shader: flat"></a-mixin>
       <a-mixin id="m-view"     material="src: #texView; shader: flat"></a-mixin>
 
-      <!-- shader: phong για το γυαλιστερό χρώμιο -->
+      <!-- shader: phong  -->
       <a-mixin id="m-chrome"   material="shader: phong; color: #b9c0c7; specular: #ffffff; shininess: 90; reflectivity: 0.8"></a-mixin>
     </a-assets>
 
@@ -99,7 +99,7 @@
     <a-entity id="ambient" light="type: ambient; color: #ccd6e2; intensity: 0.22"></a-entity>
     <a-entity id="hemi" light="type: hemisphere; color: #eef2f6; groundColor: #a49a84; intensity: 0.18"></a-entity>
 
-    <!-- Ήλιος: κατευθυντικό φως από την πλευρά των παραθύρων, με σκιές. -->
+    <!-- Ήλιος:  από την πλευρά των παραθύρων, με σκιές. -->
     <a-entity id="sun"
               light="type: directional; color: #fff2d4; intensity: 0.85; castShadow: true;
                      shadowMapWidth: 2048; shadowMapHeight: 2048; shadowBias: -0.0006;
@@ -112,7 +112,7 @@
     <a-entity class="lamp" light="type: point; color: #eaf0fb; intensity: 9; distance: 7; decay: 1" position="0.5 2.42 1.1"></a-entity>
     <a-entity class="lamp" light="type: point; color: #eaf0fb; intensity: 7.3; distance: 7; decay: 1" position="2.4 2.42 -1.2"></a-entity>
 
-    <!-- Προβολέας: σποτ που στοχεύει στο πανί προβολής -->
+    <!-- Προβολέα-->
     <a-entity id="projector-target" position="0.7 1.75 -2.98"></a-entity>
     <a-entity id="projector-beam"
               light="type: spot; color: #eaf1ff; intensity: 28; angle: 31; penumbra: 0.45;
@@ -190,18 +190,18 @@
     <a-box mixin="m-louvre" position="3.37 2.38 2.3" width="0.17" height="0.06" depth="0.75"></a-box>
 
     <!-- ============ ΤΟΙΧΟΣ ΤΟΥ ΔΙΔΑΣΚΟΝΤΑ ============ -->
-    <!-- Πανί προβολής -->
+    
     <a-plane material="src: #texProjector; repeat: 3 2; roughness: 1" position="0.7 1.75 -2.99" width="2.2" height="1.4"></a-plane>
     <!-- Πινακίδα αίθουσας -->
     <a-plane mixin="m-sign" position="-1.72 1.9 -2.98" width="0.4" height="0.2"></a-plane>
     <!-- Αφίσες στον αριστερό τοίχο -->
     <a-plane mixin="m-poster" position="-3.49 1.72 -0.5" rotation="0 90 0" width="0.42" height="0.6"></a-plane>
     <a-plane mixin="m-poster2" position="-3.49 1.72 0.7" rotation="0 90 0" width="0.42" height="0.6"></a-plane>
-    <!-- Πίνακας διακοπτών και κανάλι καλωδίων στη βάση του τοίχου -->
+    
     <a-box material="color: #c8c4ba; roughness: 0.7" position="2.7 1.5 -2.94" width="0.3" height="0.3" depth="0.06"></a-box>
     <a-box material="color: #cdc9c0" position="0.6 0.12 -2.95" width="5.8" height="0.1" depth="0.08"></a-box>
 
-    <!-- Φωτιστικά οροφής (τα σώματα· τα φώτα είναι πιο πάνω) -->
+    <!--  -->
     <a-box mixin="m-lamp" position="-1.7 2.83 -1.2" width="0.26" height="0.07" depth="1.3"></a-box>
     <a-box mixin="m-lamp" position="-1.7 2.83 1.1" width="0.26" height="0.07" depth="1.3"></a-box>
     <a-box mixin="m-lamp" position="0.5 2.83 -1.2" width="0.26" height="0.07" depth="1.3"></a-box>
@@ -209,7 +209,7 @@
     <a-box mixin="m-lamp" position="2.4 2.83 -1.2" width="0.26" height="0.07" depth="1.3"></a-box>
     <a-box mixin="m-lamp" position="2.4 2.83 1.1" width="0.26" height="0.07" depth="1.3"></a-box>
 
-    <!-- Προβολέας οροφής. Ο κώνος είναι διαφανής και δείχνει τη δέσμη. -->
+    <!-- Προβολέας -->
     <a-cylinder mixin="m-metal" position="0.7 2.74 -1.3" radius="0.03" height="0.32"></a-cylinder>
     <a-box mixin="m-metal" position="0.7 2.57 -1.3" width="0.28" height="0.03" depth="0.22"></a-box>
     <a-box mixin="m-white" position="0.7 2.48 -1.3" width="0.32" height="0.15" depth="0.28" shadow="cast: true"></a-box>
