@@ -20,8 +20,7 @@ AFRAME.registerComponent('chair', {
   }
 });
 
-/* Οθόνη (βάση και πλαίσιο), πληκτρολόγιο, ποντίκι και πύργος. Η εικόνα της
-   οθόνης γράφεται στο index.html, γιατί αλλάζει από θέση σε θέση. */
+
 AFRAME.registerComponent('workstation', {
   init: function () {
     this.el.insertAdjacentHTML('beforeend', `
